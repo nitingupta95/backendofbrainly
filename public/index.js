@@ -122,11 +122,12 @@ function auth(req, res, next) {
 app.use(auth);
 app.post("/api/v1/content", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id, type, link, title, tags } = req.body;
+        const { id, type, link, title, tags, userId } = req.body;
         yield db_1.ContentModel.create({
             id: id,
             type: type,
             link: link,
+            userId: req.userId,
             title: title,
             tags: tags
         });
@@ -138,30 +139,18 @@ app.post("/api/v1/content", (req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(500).json(err);
     }
 }));
-/*{
-    "content": [
-        {
-            "id": 1,
-            "type": "document" | "tweet" | "youtube" | "link",
-            "link": "url",
-            "title": "Title of doc/video",
-            "tags": ["productivity", "politics", ...]
-        }
-    
-    ]
-}*/
 app.get("/api/v1/content", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Extract optional filters from query parameters
         const { id, type, title, tags } = req.query;
-        // Build a dynamic filter object
-        const filter = {};
-        // if (userId) filter.id = userId;
-        // if (type) filter.type = type;
-        // if (title) filter.title = { $regex: title, $options: "i" }; // Case-insensitive search
-        // if (tags) filter.tags = { $in: tags.split(",") }; // Search by tags
-        // Fetch data from the database
-        const data = yield db_1.ContentModel.find(filter);
+        const userId = req.userId;
+        if (!userId) {
+            res.status(401).json({
+                message: "Unauthorized: User ID is missing",
+            });
+            return;
+        }
+        const data = yield db_1.ContentModel.find({ userId: userId }).populate("userId");
         // Return the fetched data
         res.json({
             message: "Data fetched successfully",
