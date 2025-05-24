@@ -1,5 +1,6 @@
- 
-import React, { useState, useEffect } from 'react';
+ import * as React from 'react';
+
+import  { useState, useEffect } from 'react';
 import Input from '../component/Input';
 import {Button} from '../components/ui/button';
 import { BACKEND_URL } from '../config';

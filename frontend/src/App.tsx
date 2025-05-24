@@ -4,7 +4,8 @@ import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Dashboard from './pages/Dashboard';
 import Content from './pages/Content';
-import React from "react"
+import * as React from 'react';
+
 
 function App() {
   return (

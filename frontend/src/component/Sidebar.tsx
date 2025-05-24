@@ -1,4 +1,5 @@
-import React from "react"
+import * as React from 'react';
+
 import Sidebaritem from './Sidebaritem';
 import TwitterIcon from '../icons/TwitterIcon';
 import  YoutubeIcon  from '../icons/YoutubeIcon';

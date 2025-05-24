@@ -1,5 +1,6 @@
 import  { ReactElement, MouseEventHandler } from "react";
-import React from "react";
+import * as React from 'react';
+
 interface SidebarItemProps {
   text: string;
   icon: ReactElement;

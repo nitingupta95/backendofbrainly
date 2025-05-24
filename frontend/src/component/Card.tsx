@@ -1,5 +1,5 @@
+import * as React from 'react';
 
-import React from "react";
 import  { useEffect , useState,useRef} from 'react';
 import ShareIcon from '../icons/ShareIcon';
 import YoutubeIcon from '../icons/YoutubeIcon';
