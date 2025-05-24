@@ -22,10 +22,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"  
+type ContentType = "document" | "link" | "tweet" | "youtube";
 interface cardProps {
   title: string;
   link: string;
-  type: 'link' | 'tweet' | 'youtube' | 'document';
+  type: ContentType;
   id: number; 
 }
 
