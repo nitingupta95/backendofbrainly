@@ -40,6 +40,10 @@ interface ContentItem {
   link: string;
   type: 'link' | 'tweet' | 'youtube' | 'document';
 }
+const isValidType = (t: string): t is ContentType => {
+  return ["document", "link", "tweet", "youtube"].includes(t);
+};
+type ContentType = "document" | "link" | "tweet" | "youtube";
 
 function Dashboard() {
   const { contents, refresh } = UseContent() as unknown as {
@@ -192,9 +196,12 @@ function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {contents.map(({ id, type, link, title }) => (
-            <Card id={id} key={String(id)} link={link} title={title} type={type} />
-          ))}
+          {contents.map(({ id, type, link, title }) =>
+          isValidType(type) ? (
+            <Card key={id} id={id} link={link} title={title} type={type} />
+          ) : null
+        )}
+
         </div>
       </div>
     </div>

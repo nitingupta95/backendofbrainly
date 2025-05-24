@@ -1,26 +1,24 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
+    "target": "ESNext",                          // Modern JS target, supports private fields (#private)
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],   // Needed for React + modern JS features
+    "module": "ESNext",                          // Use ESNext modules for Vite compatibility
+    "moduleResolution": "node",                  // Use Node module resolution
+    "jsx": "react-jsx",                           // Use React 17+ JSX transform
+    "strict": true,                               // Enable all strict type checking
+    "esModuleInterop": true,                      // Fixes import errors with CommonJS modules
+    "skipLibCheck": true,                         // Skip type checks of declaration files (fixes many errors)
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "allowJs": true,
+    "noEmit": true,                               // Don't emit compiled files (Vite handles this)
+    "baseUrl": ".",                               // Base directory to resolve non-relative imports
+    "paths": {
+      "@/*": ["src/*"]                            // Shortcut for imports from src
+    }
   },
   "include": ["src"],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "exclude": ["node_modules", "dist"]
 }

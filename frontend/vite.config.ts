@@ -4,12 +4,10 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  css: {
-    postcss: './postcss.config.cjs' // Explicit path to config
-  },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, 'src'),
     },
-  }
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json'] // optional but good
+  },
 })

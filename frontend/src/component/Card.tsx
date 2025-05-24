@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-import  { useEffect , useState,useRef} from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ShareIcon from '../icons/ShareIcon';
 import YoutubeIcon from '../icons/YoutubeIcon';
 import TwitterIcon from '@/icons/TwitterIcon';
@@ -11,7 +10,7 @@ import ExternalLInk from '@/icons/ExternalLInk';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { BACKEND_URL } from '@/config';
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
@@ -21,39 +20,41 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"  
+} from "@/components/ui/dialog";
+
 type ContentType = "document" | "link" | "tweet" | "youtube";
+
 interface cardProps {
   title: string;
   link: string;
   type: ContentType;
-  id: number; 
+  id: number;
 }
 
-interface TweetEmbedProps {
-  link: string;
+// Extend the Window interface to include twttr for TS
+declare global {
+  interface Window {
+    twttr?: {
+      widgets?: {
+        load: (element?: HTMLElement | null) => void;
+      };
+    };
+  }
 }
-
-const TweetEmbed: React.FC<TweetEmbedProps> = ({ link }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  // Implementation for TweetEmbed (if needed)
-  return null;
-};
-
 
 function Card({ id, title, link, type }: cardProps) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false); // ✅ Properly declared at component level
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (!window['twttr']) {
+    if (!window.twttr) {
       const script = document.createElement('script');
       script.src = 'https://platform.twitter.com/widgets.js';
       script.async = true;
       document.body.appendChild(script);
     } else {
-      window['twttr']?.widgets?.load(containerRef.current);
+      window.twttr.widgets?.load(containerRef.current);
     }
   }, [link]);
 
@@ -74,17 +75,15 @@ function Card({ id, title, link, type }: cardProps) {
         data: { id },
         headers: { token },
       });
-      toast.success("Content deleted successfully!",{
+      toast.success("Content deleted successfully!", {
         className: "bg-green-100 border border-green-400 text-green-800 font-semibold",
       });
       setOpen(false);
       window.location.reload();
-    } catch (err) {
+    } catch {
       toast.error("Failed to delete content");
     }
   };
-
- 
 
   const renderMedia = () => {
     if (type === 'youtube') {
@@ -101,31 +100,32 @@ function Card({ id, title, link, type }: cardProps) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="no-referrer"
           allowFullScreen
-        ></iframe>
+        />
       );
     }
-    if (type === 'document') {
-    const fileId = link.split("/d/")[1]?.split("/")[0];
-    const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
 
-    return (
+    if (type === 'document') {
+      const fileId = link.split("/d/")[1]?.split("/")[0];
+      const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+      return (
         <iframe
-        className="w-full rounded-md mt-4"
-        src={`https://docs.google.com/gview?url=${encodeURIComponent(directUrl)}&embedded=true`}
-        title="Document viewer"
-        frameBorder="0"
-        allowFullScreen
-        ></iframe>
-    );
+          className="w-full rounded-md mt-4"
+          src={`https://docs.google.com/gview?url=${encodeURIComponent(directUrl)}&embedded=true`}
+          title="Document viewer"
+          frameBorder="0"
+          allowFullScreen
+        />
+      );
     }
 
     if (type === 'tweet') {
       return (
-         <div ref={containerRef} className="mt-4">
-        <blockquote className="twitter-tweet">
+        <div ref={containerRef} className="mt-4">
+          <blockquote className="twitter-tweet">
             <a href={link.replace('x.com', 'twitter.com')}></a>
-        </blockquote>
-    </div>
+          </blockquote>
+        </div>
       );
     }
 
@@ -147,14 +147,13 @@ function Card({ id, title, link, type }: cardProps) {
     return null;
   };
 
-   
-   return (
+  return (
     <div className="p-4 bg-white rounded-md border-2 border-slate-300 max-w-72 min-h-48 min-w-72">
       <div className="flex justify-between items-center">
         <div className="flex items-center pr-2 text-md">
           {type === "youtube" && <YoutubeIcon className="pr-2 text-black size-5" />}
-          {type === "tweet" && <TwitterIcon className="pr-2 text-black  size-5" />}
-          {type === "link" && <LinkIcon className="pr-2 text-black s-ze-5" />}
+          {type === "tweet" && <TwitterIcon className="pr-2 text-black size-5" />}
+          {type === "link" && <LinkIcon className="pr-2 text-black size-5" />}
           {type === "document" && <DocumentIcon className="pr-2 text-black size-5" />}
           <span className="font-medium text-black">{title}</span>
         </div>
@@ -163,7 +162,6 @@ function Card({ id, title, link, type }: cardProps) {
             <ShareIcon />
           </div>
 
-          {/* Trigger the dialog */}
           <div className="pr-2 text-gray-500 cursor-pointer" onClick={() => setOpen(true)}>
             <DeleteIcon />
           </div>
@@ -180,7 +178,7 @@ function Card({ id, title, link, type }: cardProps) {
       </div>
 
       {renderMedia()}
- 
+
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[400px] bg-white">
           <DialogHeader>
@@ -193,7 +191,7 @@ function Card({ id, title, link, type }: cardProps) {
             <Button variant="outline" className='bg-black text-white' onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button variant="destructive"  className="bg-violet-700 text-white " onClick={confirmDelete}>
+            <Button variant="destructive" className="bg-violet-700 text-white" onClick={confirmDelete}>
               Delete
             </Button>
           </DialogFooter>
@@ -202,6 +200,5 @@ function Card({ id, title, link, type }: cardProps) {
     </div>
   );
 }
-
 
 export default Card;
