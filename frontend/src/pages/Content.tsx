@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Sidebar from '../component/Sidebar';
+import React from "react"
 import Card from '../component/Card';
 import UseContent from '../hooks/UseContent';
 import { useNavigate } from 'react-router-dom';

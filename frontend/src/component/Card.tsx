@@ -1,4 +1,6 @@
-import React, { useEffect , useState} from 'react';
+
+import React from "react";
+import  { useEffect , useState,useRef} from 'react';
 import ShareIcon from '../icons/ShareIcon';
 import YoutubeIcon from '../icons/YoutubeIcon';
 import TwitterIcon from '@/icons/TwitterIcon';
@@ -23,9 +25,10 @@ import {
 interface cardProps {
   title: string;
   link: string;
-  type: 'tweet' | 'youtube' | 'link' | 'document';
-  id: Number,
+  type: 'link' | 'tweet' | 'youtube' | 'document';
+  id: number; 
 }
+
 interface TweetEmbedProps {
   link: string;
 }
@@ -148,10 +151,10 @@ function Card({ id, title, link, type }: cardProps) {
     <div className="p-4 bg-white rounded-md border-2 border-slate-300 max-w-72 min-h-48 min-w-72">
       <div className="flex justify-between items-center">
         <div className="flex items-center pr-2 text-md">
-          {type === "youtube" && <YoutubeIcon className="pr-2 text-black" />}
-          {type === "tweet" && <TwitterIcon className="pr-2 text-black" />}
-          {type === "link" && <LinkIcon className="pr-2 text-black" />}
-          {type === "document" && <DocumentIcon className="pr-2 text-black" />}
+          {type === "youtube" && <YoutubeIcon className="pr-2 text-black size-5" />}
+          {type === "tweet" && <TwitterIcon className="pr-2 text-black  size-5" />}
+          {type === "link" && <LinkIcon className="pr-2 text-black s-ze-5" />}
+          {type === "document" && <DocumentIcon className="pr-2 text-black size-5" />}
           <span className="font-medium text-black">{title}</span>
         </div>
         <div className="flex items-center justify-between">

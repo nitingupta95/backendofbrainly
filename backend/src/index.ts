@@ -10,7 +10,7 @@ import { ContentModel, UserModel, LinkModel } from './db';
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_secure_secret";
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/yourdb";
+const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://ng61315:NITINgupta92@cluster0.fantk.mongodb.net/secondBrain";
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
@@ -20,7 +20,7 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: '',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: '*'

@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../component/Sidebar';
+ 
 import Card from '../component/Card';
 import UseContent from '../hooks/UseContent';
-import {toast, Toaster} from "sonner";
+import { toast, Toaster } from "sonner";
 import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
@@ -20,7 +21,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../components/ui/select"
+} from "../components/ui/select";
 
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
@@ -30,14 +31,20 @@ import PlusIcon from '../icons/PlusIcon';
 import { BACKEND_URL } from '@/config';
 import axios from 'axios';
 
+// ✅ Added `id` to the ContentItem interface
 interface ContentItem {
+  id: number;
   title: string;
   link: string;
-  type: string;
+  type: 'link' | 'tweet' | 'youtube' | 'document';
 }
 
 function Dashboard() {
-  const { contents, refresh }: { contents: ContentItem[]; refresh: () => void } = UseContent();
+  const { contents, refresh } = UseContent() as unknown as {
+    contents: ContentItem[];
+    refresh: () => void;
+  };
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [id, setId] = useState<string>('');
   const [title, setTitle] = useState<string>('');
@@ -69,12 +76,10 @@ function Dashboard() {
         navigate('/signin');
         return;
       }
-      console.log("Token used for request:", token);
 
-      
       await axios.post(
         `${BACKEND_URL}/api/v1/content`,
-        {id, title, link, type },
+        { id, title, link, type },
         {
           headers: {
             token: `${token}`,
@@ -82,7 +87,7 @@ function Dashboard() {
         }
       );
 
-      toast.success('Content saved successfully!',{
+      toast.success('Content saved successfully!', {
         className: "bg-green-100 border border-green-400 text-green-800 font-semibold",
       });
       setModalOpen(false);
@@ -131,7 +136,7 @@ function Dashboard() {
                   <Label htmlFor="type">Type</Label>
                   <Select value={type} onValueChange={setType}>
                     <SelectTrigger className="w-[180px] ">
-                      <SelectValue placeholder="Theme" />
+                      <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent className='bg-black text-white'>
                       <SelectItem value="document">document</SelectItem>
@@ -153,7 +158,7 @@ function Dashboard() {
               </div>
 
               <DialogFooter className="mt-8">
-                <ShadButton  onClick={handleSaveContent}>Save Content</ShadButton>
+                <ShadButton onClick={handleSaveContent}>Save Content</ShadButton>
               </DialogFooter>
             </DialogContent>
           </DialogPortal>
@@ -185,8 +190,8 @@ function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {contents.map(({id, type, link, title }) => (
-            <Card id={id} key={link} link={link} title={title} type={type} />
+          {contents.map(({ id, type, link, title }) => (
+            <Card id={id} key={String(id)} link={link} title={title} type={type} />
           ))}
         </div>
       </div>

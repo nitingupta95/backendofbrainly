@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from "react";
+import React from "react"
 
 interface ButtonProps {
     variants: 'primary' | 'secondary';

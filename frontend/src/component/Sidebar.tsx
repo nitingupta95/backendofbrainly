@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import Sidebaritem from './Sidebaritem';
 import TwitterIcon from '../icons/TwitterIcon';
 import  YoutubeIcon  from '../icons/YoutubeIcon';
@@ -23,7 +23,7 @@ function Sidebar() {
       </div>
 
       <div className="pt-4">
-        <Sidebaritem text={'Twitter'} icon={<TwitterIcon />} onClick={handleTwitter}/>
+        <Sidebaritem text={'Twitter'} icon={<TwitterIcon />} />
         <Sidebaritem text={'Youtube'} icon={<YoutubeIcon />} />
         <Sidebaritem text={'Document'} icon={<DocumentIcon />} />
         <Sidebaritem text={'Links'} icon={<LinkIcon/>} />
