@@ -1,0 +1,23 @@
+ 
+
+ body{
+  font-family: 'Times New Roman', Times, serif;
+ }
+ .signup input{
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+    margin: 15px;
+    width: 200px;
+  
+  }
+ 
+  .signup button{
+    margin-left: 50px;
+    padding: 15px;
+    width: 100px;
+    border-radius: 15px;
+    background-color: rgb(29, 26, 26);
+    color: #fff;
+  }
