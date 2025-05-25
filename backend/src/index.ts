@@ -128,8 +128,14 @@ app.post('/api/v1/content', auth, async (req: Request, res: Response) => {
 
 app.delete("/api/v1/content/:id", auth, async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id } = req.params;
-    const content = await ContentModel.findOneAndDelete({ _id: id, userId: req.userId });
+    const id = parseInt(req.params.id); // Convert from string to number
+
+    if (isNaN(id)) {
+      res.status(400).json({ message: "Invalid numeric content ID" });
+      return;
+    }
+
+    const content = await ContentModel.findOneAndDelete({ id, userId: req.userId });
 
     if (!content) {
       res.status(404).json({ message: "Content not found for the given ID" });
@@ -141,6 +147,7 @@ app.delete("/api/v1/content/:id", auth, async (req: Request, res: Response): Pro
     res.status(500).json({ message: "Internal Server Error", error: err?.message || err });
   }
 });
+
 
 app.post("/api/v1/brain/share", auth, async (req: Request, res: Response): Promise<void> => {
   try {
