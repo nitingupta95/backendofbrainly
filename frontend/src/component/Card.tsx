@@ -7,6 +7,7 @@ import LinkIcon from '@/icons/LinkIcon';
 import DocumentIcon from '@/icons/DocumentIcon';
 import DeleteIcon from '@/icons/DeleteIcon';
 import ExternalLInk from '@/icons/ExternalLInk';
+import UseContent from '../hooks/UseContent'
 import { toast } from 'sonner';
 import axios from 'axios';
 import { BACKEND_URL } from '@/config';
@@ -43,6 +44,10 @@ declare global {
 }
 
 function Card({ id, title, link, type }: cardProps) {
+  const { contents, refresh } = UseContent() as unknown as {
+    contents: ContentItem[];
+    refresh: () => void;
+  };
   const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -78,7 +83,7 @@ function Card({ id, title, link, type }: cardProps) {
         className: "bg-green-100 border border-green-400 text-green-800 font-semibold",
       });
       setOpen(false);
-      navigate("/");
+      refresh();
     } catch {
       toast.error("Failed to delete content");
     }
