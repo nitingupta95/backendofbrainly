@@ -50,7 +50,7 @@ function auth(req: Request, res: Response, next: NextFunction) {
   // const token = authHeader.split(" ")[1];
 
   try {
-    const decodedData = jwt.verify(token, JWT_SECRET) as { id: string };
+    const decodedData = jwt.verify(token, JWT_SECRET) as unknown as { id: string };
     req.userId = decodedData.id;
     next();
   } catch (err) {
@@ -203,3 +203,5 @@ app.delete("/api/v1/content/:id", auth, async (req: Request, res: Response): Pro
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+export default app;

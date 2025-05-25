@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "rootDir": "./src", 
     "outDir": "./public",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -8,6 +7,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "api/**/*"],
   "exclude": ["node_modules"]
 }
