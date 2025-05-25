@@ -72,7 +72,6 @@ function Card({ id, title, link, type }: cardProps) {
 
     try {
       await axios.delete(`${BACKEND_URL}/api/v1/content/${id}`, {
-        data: { id },
         headers: { token },
       });
       toast.success("Content deleted successfully!", {
