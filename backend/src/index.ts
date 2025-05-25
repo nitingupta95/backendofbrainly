@@ -50,16 +50,7 @@ declare global {
 
 
 function auth(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({
-      message: "Token missing or invalid format"
-    });
-  }
-
-  const token = authHeader.split(" ")[1];
-
+  const token = req.headers.token;
   try {
     const decodedData = jwt.verify(token, JWT_SECRET) as { id: string };
     req.userId = decodedData.id;
