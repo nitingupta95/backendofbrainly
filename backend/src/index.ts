@@ -121,7 +121,7 @@ app.post('/api/v1/content', auth, async (req: Request, res: Response) => {
     });
     res.status(201).json({ message: 'Content saved', content });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to save content' });
+    res.status(500).json({ message: 'Failed to save content' error: err.message || err });
   }
 });
 
