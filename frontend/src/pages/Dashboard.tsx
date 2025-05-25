@@ -87,9 +87,9 @@ function Dashboard() {
         `${BACKEND_URL}/api/v1/content`,
         { id, title, link, type },
         {
-          headers: {
-            token: `${token}`,
-          },
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
         }
       );
 
