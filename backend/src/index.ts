@@ -191,20 +191,7 @@ app.get("/api/v1/brain/:shareLink", async (req: Request, res: Response): Promise
     res.status(500).json({ message: "Internal Server Error", error: err?.message || err });
   }
 });
-app.delete("/api/v1/content/:id", auth, async (req: Request, res: Response): Promise<void> => {
-  try {
-    const { id } = req.params;
-    const content = await ContentModel.findOneAndDelete({ _id: id, userId: req.userId });
-    if (!content) {
-      res.status(404).json({ message: "Content not found for the given ID" });
-      return;
-    }
-    res.status(200).json({ message: `Content with ID ${id} has been deleted successfully.` });
-  } catch (err: any) {  
-    res.status(500).json({ message: "Internal Server Error", error: err?.message || err });
-  } 
-}
-)
+ 
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
