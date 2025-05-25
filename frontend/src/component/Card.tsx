@@ -78,7 +78,7 @@ function Card({ id, title, link, type }: cardProps) {
         className: "bg-green-100 border border-green-400 text-green-800 font-semibold",
       });
       setOpen(false);
-      window.location.reload();
+      navigate("/");
     } catch {
       toast.error("Failed to delete content");
     }
