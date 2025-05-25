@@ -20,11 +20,13 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: '',
+  origin: 'https://second-brain-app-frontend.vercel.app',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: '*'
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
+
+ 
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
