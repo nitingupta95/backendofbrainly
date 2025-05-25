@@ -112,8 +112,9 @@ app.get('/api/v1/content', auth, async (req: Request, res: Response) => {
 
 app.post('/api/v1/content', auth, async (req: Request, res: Response) => {
   try {
-    const { type, link, title } = req.body;
+    const {id, type, link, title } = req.body;
     const content = await ContentModel.create({
+      id,
       type,
       link,
       title,
