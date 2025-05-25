@@ -47,19 +47,21 @@ declare global {
   }
 }
 
+
+
 function auth(req: Request, res: Response, next: NextFunction) {
-  const token = req.headers.authorization;
+  const authHeader = req.headers.authorization;
 
-  // if (!authHeader || !authHeader.startsWith("Bearer ")) {
-  //   return res.status(401).json({
-  //     message: "Token missing or invalid format"
-  //   });
-  // }
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({
+      message: "Token missing or invalid format"
+    });
+  }
 
-  // const token = authHeader.split(" ")[1];
+  const token = authHeader.split(" ")[1];
 
   try {
-    const decodedData = jwt.verify(token, JWT_SECRET) as unknown as { id: string };
+    const decodedData = jwt.verify(token, JWT_SECRET) as { id: string };
     req.userId = decodedData.id;
     next();
   } catch (err) {
@@ -68,6 +70,7 @@ function auth(req: Request, res: Response, next: NextFunction) {
     });
   }
 }
+
 
 // Auth Routes
 app.post('/api/v1/signup', async (req: Request, res: Response) => {
