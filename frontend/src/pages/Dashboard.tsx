@@ -88,7 +88,7 @@ function Dashboard() {
         { id, title, link, type },
         {
          headers: {
-           Authorization: `${token}`,
+           token: `${token}`,
          },
         }
       );
