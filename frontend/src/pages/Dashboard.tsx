@@ -125,7 +125,7 @@ function Dashboard() {
                   <Input
                     id="id"
                     value={id}
-                    onChange={(e) => setId(e.target.value)}
+                    onChange={(e) => setId(Number(e.target.value))}
                     placeholder="Enter id"
                   />
                 </div>
