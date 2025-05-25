@@ -84,9 +84,9 @@ app.post('/api/v1/signup', async (req: Request, res: Response) => {
 
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
     res.status(201).json({ token, name: user.name });
-  } catch (err) {
-    res.status(500).json({ message: 'Server error during signup' });
-    console.log(err);
+  } catch (err: any) {
+  console.error('Signup error:', err);
+  res.status(500).json({ message: 'Server error during signup', error: err.message || err });
   }
 });
 
