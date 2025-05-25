@@ -16,6 +16,13 @@ mongoose.connect(MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => console.error("MongoDB connection error:", err));
 
+
+
+mongoose.connection.on('connected', () => console.log('Mongoose connected'));
+mongoose.connection.on('error', err => console.error('Mongoose connection error:', err));
+mongoose.connection.on('disconnected', () => console.log('Mongoose disconnected'));
+
+
 const app = express();
 app.use(express.json());
 
