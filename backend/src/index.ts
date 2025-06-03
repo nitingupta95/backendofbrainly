@@ -10,7 +10,7 @@ import { ContentModel, UserModel, LinkModel } from './db';
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_secure_secret";
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://ng61315:NITINgupta92@cluster0.fantk.mongodb.net/SecondBrainn";
+const MONGO_URI = process.env.MONGO_URI ;
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
